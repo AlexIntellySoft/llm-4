@@ -1,0 +1,231 @@
+{
+  "results": {
+    "e5-base": {
+      "recall_at_1": 1.0,
+      "recall_at_3": 1.0,
+      "recall_at_5": 1.0,
+      "avg_query_ms": 586.0,
+      "per_question": [
+        {
+          "qid": "B1",
+          "expect_source": "05_poryadok_incidenty.pdf",
+          "first_rank": 1,
+          "top1_source": "05_poryadok_incidenty.pdf",
+          "top1_similarity": 0.8924
+        },
+        {
+          "qid": "B2",
+          "expect_source": "03_reglament_komandirovki.pdf",
+          "first_rank": 1,
+          "top1_source": "03_reglament_komandirovki.pdf",
+          "top1_similarity": 0.8892
+        },
+        {
+          "qid": "B3",
+          "expect_source": "06_reglament_zakupki.pdf",
+          "first_rank": 1,
+          "top1_source": "06_reglament_zakupki.pdf",
+          "top1_similarity": 0.8391
+        },
+        {
+          "qid": "B4",
+          "expect_source": "08_faq.md",
+          "first_rank": 1,
+          "top1_source": "08_faq.md",
+          "top1_similarity": 0.8666
+        },
+        {
+          "qid": "B5",
+          "expect_source": "09_glossarij.txt",
+          "first_rank": 1,
+          "top1_source": "09_glossarij.txt",
+          "top1_similarity": 0.8295
+        },
+        {
+          "qid": "B6",
+          "expect_source": "02_polozhenie_otpusk.pdf",
+          "first_rank": 1,
+          "top1_source": "02_polozhenie_otpusk.pdf",
+          "top1_similarity": 0.874
+        },
+        {
+          "qid": "B7",
+          "expect_source": "05_poryadok_incidenty.pdf",
+          "first_rank": 1,
+          "top1_source": "05_poryadok_incidenty.pdf",
+          "top1_similarity": 0.8883
+        },
+        {
+          "qid": "B8",
+          "expect_source": "06_reglament_zakupki.pdf",
+          "first_rank": 1,
+          "top1_source": "06_reglament_zakupki.pdf",
+          "top1_similarity": 0.8206
+        },
+        {
+          "qid": "C1",
+          "expect_source": "02_polozhenie_otpusk.pdf",
+          "first_rank": 1,
+          "top1_source": "02_polozhenie_otpusk.pdf",
+          "top1_similarity": 0.8831
+        },
+        {
+          "qid": "C2",
+          "expect_source": "03_reglament_komandirovki.pdf",
+          "first_rank": 1,
+          "top1_source": "03_reglament_komandirovki.pdf",
+          "top1_similarity": 0.8911
+        },
+        {
+          "qid": "C3",
+          "expect_source": "04_onboarding.pdf",
+          "first_rank": 1,
+          "top1_source": "04_onboarding.pdf",
+          "top1_similarity": 0.8707
+        },
+        {
+          "qid": "C4",
+          "expect_source": "01_politika_ib.pdf",
+          "first_rank": 1,
+          "top1_source": "01_politika_ib.pdf",
+          "top1_similarity": 0.8761
+        },
+        {
+          "qid": "K1",
+          "expect_source": "05_poryadok_incidenty.pdf",
+          "first_rank": 1,
+          "top1_source": "05_poryadok_incidenty.pdf",
+          "top1_similarity": 0.8974
+        },
+        {
+          "qid": "S1",
+          "expect_source": "07_grejdy_konfidencialno.pdf",
+          "first_rank": 1,
+          "top1_source": "07_grejdy_konfidencialno.pdf",
+          "top1_similarity": 0.8369
+        },
+        {
+          "qid": "S2",
+          "expect_source": "07_grejdy_konfidencialno.pdf",
+          "first_rank": 1,
+          "top1_source": "07_grejdy_konfidencialno.pdf",
+          "top1_similarity": 0.8392
+        }
+      ]
+    },
+    "nomic-lms": {
+      "recall_at_1": 0.8,
+      "recall_at_3": 0.867,
+      "recall_at_5": 0.867,
+      "avg_query_ms": 20.6,
+      "per_question": [
+        {
+          "qid": "B1",
+          "expect_source": "05_poryadok_incidenty.pdf",
+          "first_rank": 1,
+          "top1_source": "05_poryadok_incidenty.pdf",
+          "top1_similarity": 0.8272
+        },
+        {
+          "qid": "B2",
+          "expect_source": "03_reglament_komandirovki.pdf",
+          "first_rank": 1,
+          "top1_source": "03_reglament_komandirovki.pdf",
+          "top1_similarity": 0.8159
+        },
+        {
+          "qid": "B3",
+          "expect_source": "06_reglament_zakupki.pdf",
+          "first_rank": 2,
+          "top1_source": "03_reglament_komandirovki.pdf",
+          "top1_similarity": 0.8125
+        },
+        {
+          "qid": "B4",
+          "expect_source": "08_faq.md",
+          "first_rank": 1,
+          "top1_source": "08_faq.md",
+          "top1_similarity": 0.8035
+        },
+        {
+          "qid": "B5",
+          "expect_source": "09_glossarij.txt",
+          "first_rank": 1,
+          "top1_source": "09_glossarij.txt",
+          "top1_similarity": 0.7958
+        },
+        {
+          "qid": "B6",
+          "expect_source": "02_polozhenie_otpusk.pdf",
+          "first_rank": 1,
+          "top1_source": "02_polozhenie_otpusk.pdf",
+          "top1_similarity": 0.7941
+        },
+        {
+          "qid": "B7",
+          "expect_source": "05_poryadok_incidenty.pdf",
+          "first_rank": 1,
+          "top1_source": "05_poryadok_incidenty.pdf",
+          "top1_similarity": 0.7966
+        },
+        {
+          "qid": "B8",
+          "expect_source": "06_reglament_zakupki.pdf",
+          "first_rank": 1,
+          "top1_source": "06_reglament_zakupki.pdf",
+          "top1_similarity": 0.7904
+        },
+        {
+          "qid": "C1",
+          "expect_source": "02_polozhenie_otpusk.pdf",
+          "first_rank": 1,
+          "top1_source": "02_polozhenie_otpusk.pdf",
+          "top1_similarity": 0.8244
+        },
+        {
+          "qid": "C2",
+          "expect_source": "03_reglament_komandirovki.pdf",
+          "first_rank": 1,
+          "top1_source": "03_reglament_komandirovki.pdf",
+          "top1_similarity": 0.814
+        },
+        {
+          "qid": "C3",
+          "expect_source": "04_onboarding.pdf",
+          "first_rank": 1,
+          "top1_source": "04_onboarding.pdf",
+          "top1_similarity": 0.8335
+        },
+        {
+          "qid": "C4",
+          "expect_source": "01_politika_ib.pdf",
+          "first_rank": 1,
+          "top1_source": "01_politika_ib.pdf",
+          "top1_similarity": 0.7963
+        },
+        {
+          "qid": "K1",
+          "expect_source": "05_poryadok_incidenty.pdf",
+          "first_rank": 1,
+          "top1_source": "05_poryadok_incidenty.pdf",
+          "top1_similarity": 0.8058
+        },
+        {
+          "qid": "S1",
+          "expect_source": "07_grejdy_konfidencialno.pdf",
+          "first_rank": null,
+          "top1_source": "04_onboarding.pdf",
+          "top1_similarity": 0.7618
+        },
+        {
+          "qid": "S2",
+          "expect_source": "07_grejdy_konfidencialno.pdf",
+          "first_rank": null,
+          "top1_source": "08_faq.md",
+          "top1_similarity": 0.7757
+        }
+      ]
+    }
+  },
+  "questions": 15
+}

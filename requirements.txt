@@ -1,0 +1,29 @@
+# Локальная LLM — через OpenAI-совместимый сервер LM Studio (127.0.0.1:1234).
+# Сам LM Studio ставится отдельно (см. README), пакетом не является.
+openai>=3.0,<4
+
+# Эмбеддинги: multilingual-e5-base на sentence-transformers (MPS/CUDA/CPU)
+sentence-transformers>=6.0,<7
+torch>=2.4
+
+# Векторная база
+chromadb>=1.5,<2
+
+# Чанкование
+langchain-text-splitters>=1.0,<2
+
+# Чтение и генерация корпуса документов
+pypdf>=6.0
+reportlab>=5.0
+
+# Интерфейс
+gradio>=6.0,<7
+
+# Конфигурация
+python-dotenv>=1.0
+
+# Отчёт и графики
+pandas>=2.2
+matplotlib>=3.8
+jupyter>=1.0
+ipykernel>=6.29

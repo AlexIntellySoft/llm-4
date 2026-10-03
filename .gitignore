@@ -1,0 +1,14 @@
+# окружение
+.venv/
+__pycache__/
+*.py[cod]
+.env
+
+# векторная база пересобирается из data/raw одной командой
+data/chroma/
+
+# кэш моделей и прочий мусор
+.cache/
+.DS_Store
+.ipynb_checkpoints/
+outputs/experiments_run.log
