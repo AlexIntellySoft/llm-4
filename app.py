@@ -25,7 +25,7 @@ CSS = """
 footer {display: none !important;}
 """
 
-INTRO = """## Внутренний ассистент АО «Полярис Технологии"
+INTRO = """## Внутренний ассистент АО «Полярис Технологии»
 
 Отвечает по внутренним регламентам компании: информационная безопасность, отпуска,
 командировки, адаптация, инциденты, закупки. Работает полностью локально —
@@ -103,8 +103,10 @@ def build_ui() -> gr.Blocks:
 
         with gr.Row():
             with gr.Column(scale=3):
-                chat = gr.Chatbot(type="messages", height=440, show_label=False,
-                                  avatar_images=None)
+                # Gradio 6: формат сообщений {"role", "content"} единственный,
+                # отдельный параметр type больше не нужен.
+                chat = gr.Chatbot(height=440, show_label=False,
+                                  placeholder="История диалога появится здесь")
                 msg = gr.Textbox(placeholder="Задайте вопрос по внутренним регламентам…",
                                  show_label=False, lines=2, autofocus=True)
                 with gr.Row():
@@ -158,5 +160,6 @@ def preflight() -> None:
 
 if __name__ == "__main__":
     preflight()
+    # server_name жёстко 127.0.0.1: интерфейс не должен слушать внешний интерфейс.
     build_ui().launch(server_name="127.0.0.1", server_port=7860,
-                      show_api=False, inbrowser=False, quiet=False)
+                      inbrowser=False, quiet=False)

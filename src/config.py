@@ -75,6 +75,13 @@ RAG = RagConfig()
 
 
 def collection_name(embedder: str, chunk: ChunkConfig | None = None) -> str:
-    """Отдельная коллекция на каждую комбинацию эмбеддера и параметров нарезки."""
+    """Отдельная коллекция на каждую комбинацию эмбеддера и параметров нарезки.
+
+    Флаг крошки тоже входит в имя, иначе индекс, собранный с
+    --no-contextual-header, молча перетирал бы обычный: содержимое разное,
+    а имя одно. Суффикс добавляется только при выключенной крошке, чтобы
+    не ломать имена уже собранных коллекций.
+    """
     c = chunk or CHUNK
-    return f"polaris__{embedder.replace('.', '_')}__{c.chunk_size}_{c.chunk_overlap}"
+    name = f"polaris__{embedder.replace('.', '_')}__{c.chunk_size}_{c.chunk_overlap}"
+    return name if c.contextual_header else name + "__nohdr"

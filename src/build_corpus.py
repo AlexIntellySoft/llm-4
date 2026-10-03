@@ -191,9 +191,11 @@ def build_pdf(md_path: Path, out_path: Path) -> None:
         canvas.line(20 * mm, 15 * mm, 190 * mm, 15 * mm)
         canvas.restoreState()
 
+    # invariant=1 — фиксированная дата создания внутри PDF: иначе каждая пересборка
+    # меняет все файлы корпуса и засоряет историю git.
     pdf = BaseDocTemplate(str(out_path), pagesize=A4, title=title, author=COMPANY,
                           leftMargin=20 * mm, rightMargin=20 * mm,
-                          topMargin=18 * mm, bottomMargin=20 * mm)
+                          topMargin=18 * mm, bottomMargin=20 * mm, invariant=1)
     frame = Frame(20 * mm, 20 * mm, 170 * mm, A4[1] - 38 * mm, id="main")
     pdf.addPageTemplates([PageTemplate(id="std", frames=[frame], onPage=decorate)])
     pdf.build(story)
