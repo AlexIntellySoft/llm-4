@@ -4,12 +4,15 @@ __pycache__/
 *.py[cod]
 .env
 
-# векторная база пересобирается из data/raw одной командой
+# векторная база пересобирается из data/raw одной командой: python -m src.ingest
 data/chroma/
 
-# кэш моделей и прочий мусор
+# логи прогонов (сами результаты лежат в outputs/*.json и коммитятся)
+*.log
+
+# кэши, IDE и системный мусор
 .cache/
-.DS_Store
 .ipynb_checkpoints/
-outputs/experiments_run.log
-outputs/dialog_run.log
+.vscode/
+.idea/
+.DS_Store
