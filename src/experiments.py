@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import dataclasses
 import json
+import os
 import sys
 import time
 from pathlib import Path
@@ -269,12 +270,99 @@ def exp_injection() -> dict:
     return _save("exp_injection", {"collection": info["collection"], "rows": rows})
 
 
+
+def exp_dialog() -> dict:
+    """Память диалога: пять конфигураций на четырёх многоходовых диалогах.
+
+    Конфигурации подобраны так, чтобы развести два разных вклада. «buffer без
+    переформулировки» отвечает на вопрос, достаточно ли просто показать модели
+    историю; «buffer с переформулировкой» — что добавляет переписывание запроса
+    перед поиском. Без этой пары выводы о памяти были бы неразделимы.
+    """
+    from src.chat import ChatSession
+    from src.eval_dialogs import DIALOGS, grade_turn
+    from src.memory import SummaryMemory, TrimmedMemory
+
+    print("\n=== Память диалога")
+
+    configs = [
+        ("no-memory",          lambda: "no-memory",                      False),
+        ("buffer-no-rewrite",  lambda: "buffer",                         False),
+        ("buffer",             lambda: "buffer",                         True),
+        ("trim-250",           lambda: TrimmedMemory(max_tokens=250),    True),
+        ("summary",            lambda: SummaryMemory(keep_last=2),       True),
+    ]
+
+    # DIALOG_CONFIGS=buffer,trim-250,summary — прогнать только часть конфигураций.
+    # Нужен, когда меняется только промпт переформулировки: конфигурации без неё
+    # от такой правки не зависят, и гонять их заново — лишние минуты нагрузки.
+    # Недостающие берутся из DIALOG_REUSE (файл предыдущего прогона) с пометкой.
+    only = [c for c in os.getenv("DIALOG_CONFIGS", "").split(",") if c]
+    reuse_path = os.getenv("DIALOG_REUSE", "")
+    reused = (json.loads(Path(reuse_path).read_text(encoding="utf-8"))["by_config"]
+              if reuse_path else {})
+
+    out: dict = {}
+    for label, make_mem, rewrite in configs:
+        if only and label not in only:
+            if label in reused:
+                out[label] = reused[label]
+                out[label]["reused_from"] = Path(reuse_path).name
+                print(f"  конфигурация {label}: взята из {Path(reuse_path).name}")
+            continue
+        print(f"  конфигурация {label} (переформулировка: {'да' if rewrite else 'нет'})")
+        rows = []
+        for dialog in DIALOGS:
+            session = ChatSession(memory=make_mem(), contextualize=rewrite)
+            for turn in dialog.turns:
+                a = session.ask(turn.question)
+                v = grade_turn(turn, a.answer, a.refused)
+                rec = a.to_record()
+                rec.update(dialog=dialog.did, topic=dialog.topic, kind=turn.kind,
+                           passed=v.passed, verdict=v.reason, note=turn.note,
+                           expect_source=turn.expect_source,
+                           source_ok=(any(turn.expect_source in s for s in a.sources)
+                                      if turn.expect_source else None))
+                rows.append(rec)
+            flag = sum(r["passed"] for r in rows if r["dialog"] == dialog.did)
+            print(f"    {dialog.did}: {flag}/{len(dialog.turns)}")
+
+        by_kind: dict[str, dict] = {}
+        for r in rows:
+            k = by_kind.setdefault(r["kind"], {"total": 0, "passed": 0})
+            k["total"] += 1
+            k["passed"] += int(r["passed"])
+        for k in by_kind.values():
+            k["pass_rate"] = round(k["passed"] / k["total"], 3)
+
+        n = len(rows)
+        summary = {
+            "passed": sum(r["passed"] for r in rows), "total": n,
+            "pass_rate": round(sum(r["passed"] for r in rows) / n, 3),
+            "by_kind": by_kind,
+            "rewritten_turns": sum(bool(r["rewritten"]) for r in rows),
+            "avg_prompt_tokens": round(sum(r["prompt_tokens"] for r in rows) / n, 1),
+            "max_prompt_tokens": max(r["prompt_tokens"] for r in rows),
+            "avg_history_tokens": round(
+                sum(r.get("mem_history_tokens", 0) for r in rows) / n, 1),
+            "avg_contextualize_s": round(sum(r["contextualize_s"] for r in rows) / n, 2),
+            "avg_generation_s": round(sum(r["generation_s"] for r in rows) / n, 2),
+            "avg_total_s": round(sum(r["total_s"] for r in rows) / n, 2),
+            "summary_calls": sum(r.get("mem_summary_calls", 0) for r in rows[-1:]),
+        }
+        out[label] = {"summary": summary, "rows": rows}
+        print(f"    итого {summary['passed']}/{n}, контекст {summary['avg_prompt_tokens']} ток. "
+              f"(макс {summary['max_prompt_tokens']}), {summary['avg_total_s']} c/ход")
+
+    return _save("exp_dialog", {"configs": [c[0] for c in configs], "by_config": out})
+
 EXPERIMENTS = {
     "main": exp_main, "no_rag": exp_no_rag, "threshold": exp_threshold,
     "embedders": exp_embedders, "topk": exp_topk, "prompts": exp_prompts,
-    "models": exp_models, "injection": exp_injection,
+    "models": exp_models, "injection": exp_injection, "dialog": exp_dialog,
 }
-ORDER = ["threshold", "embedders", "main", "no_rag", "injection", "prompts", "topk", "models"]
+ORDER = ["threshold", "embedders", "main", "no_rag", "injection", "dialog",
+         "prompts", "topk", "models"]
 
 
 def main() -> None:

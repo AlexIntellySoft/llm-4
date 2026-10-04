@@ -9,8 +9,12 @@ torch>=2.4
 # Векторная база
 chromadb>=1.5,<2
 
-# Чанкование
+# Чанкование и память диалога
 langchain-text-splitters>=1.0,<2
+# langchain-core нужен напрямую: сообщения диалога и trim_messages.
+# Классы ConversationBufferMemory / ConversationSummaryMemory в LangChain 1.x
+# объявлены устаревшими и удалены, поэтому используются актуальные примитивы.
+langchain-core>=1.0,<2
 
 # Чтение и генерация корпуса документов
 pypdf>=6.0

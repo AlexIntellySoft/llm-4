@@ -12,3 +12,4 @@ data/chroma/
 .DS_Store
 .ipynb_checkpoints/
 outputs/experiments_run.log
+outputs/dialog_run.log
